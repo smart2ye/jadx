@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق تمكين – النموذج الأولي</title>
+  <style>
+    /* === القواعد العامة === */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f2f4f7;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      margin: 0 0 16px 0;
+      font-weight: 600;
+    }
+    p {
+      margin: 0 0 12px 0;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 16px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      cursor: pointer;
+      width: 100%;
+      padding: 12px;
+      background-color: #0052cc;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    button:hover {
+      background-color: #003ea6;
+    }
+    a {
+      color: #0052cc;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* === تنسيق الحاويات والشاشات === */
+    .screen {
+      display: none;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .screen.active {
+      display: block;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 24px auto;
+      width: 120px;
+      height: 120px;
+      background: url('logo.png') no-repeat center center / contain;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .link-group {
+      margin-top: 12px;
+      text-align: center;
+    }
+    /* زر شريط التنقل السفلي في الصفحة الرئيسية */
+    .nav-footer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 32px;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 16px;
+    }
+    .nav-footer a {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      font-size: 0.9rem;
+    }
+    .card {
+      background-color: #f9fafb;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === شاشة التسجيل وتسجيل الدخول === -->
+  <section id="login" class="screen active">
+    <div class="logo"></div>
+    <h1>تسجيل الدخول</h1>
+    <div class="form-group">
+      <label for="login-phone">رقم الهاتف أو رقم الهوية</label>
+      <input type="tel" id="login-phone" placeholder="05XXXXXXXX أو 1XXXXXXXXX" />
+    </div>
+    <div class="form-group">
+      <label for="login-password">كلمة المرور</label>
+      <input type="password" id="login-password" placeholder="••••••••••••" />
+    </div>
+    <button onclick="goToScreen('home')">تسجيل الدخول</button>
+
+    <div class="link-group">
+      <p><a href="#" onclick="goToScreen('otp')">نسيت كلمة المرور؟</a></p>
+      <p><a href="#" onclick="goToScreen('register')">إنشاء حساب جديد</a></p>
+    </div>
+  </section>
+
+  <!-- === شاشة إنشاء حساب جديد / التحقق عبر OTP === -->
+  <section id="register" class="screen">
+    <h2>إنشاء حساب جديد</h2>
+    <div class="form-group">
+      <label for="reg-phone">رقم الهاتف</label>
+      <input type="tel" id="reg-phone" placeholder="05XXXXXXXX" />
+    </div>
+    <button onclick="goToScreen('otp')">إرسال رمز التحقق</button>
+    <div class="link-group">
+      <p><a href="#" onclick="goToScreen('login')">العودة إلى تسجيل الدخول</a></p>
+    </div>
+  </section>
+
+  <section id="otp" class="screen">
+    <h2>التحقق عبر رمز OTP</h2>
+    <p>تم إرسال رمز التحقق إلى هاتفك. الرجاء إدخال الرمز المكون من 6 أرقام:</p>
+    <div class="form-group">
+      <label for="otp-code">رمز التحقق</label>
+      <input type="number" id="otp-code" placeholder="000000" maxlength="6" />
+    </div>
+    <button onclick="goToScreen('home')">تأكيد</button>
+    <div class="link-group">
+      <p><a href="#" onclick="goToScreen('login')">العودة إلى تسجيل الدخول</a></p>
+    </div>
+  </section>
+
+  <!-- === الشاشة الرئيسية بعد تسجيل الدخول === -->
+  <section id="home" class="screen">
+    <h1>مرحبًا بك في تمكين</h1>
+    <!-- بطاقة معلومات المستخدم -->
+    <div class="card">
+      <h2>حساب المستخدم</h2>
+      <p><strong>الاسم:</strong> محمد علي</p>
+      <p><strong>الرصيد الحالي:</strong> 1,250 ريال</p>
+      <p><strong>الحالة:</strong> مفعل</p>
+    </div>
+
+    <!-- قائمة الخدمات -->
+    <div class="card">
+      <h2>الخدمات المتاحة</h2>
+      <ul>
+        <li>الدعم المالي</li>
+        <li>تحويل الرصيد</li>
+        <li>عرض الشروط والأحكام</li>
+      </ul>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <div class="nav-footer">
+      <a href="#" onclick="goToScreen('home')">الرئيسية</a>
+      <a href="#" onclick="goToScreen('settings')">الإعدادات</a>
+      <a href="https://www.cash.com.ye/en/terms-conditions" target="_blank">الشروط والأحكام</a>
+    </div>
+  </section>
+
+  <!-- === شاشة الإعدادات === -->
+  <section id="settings" class="screen">
+    <h1>الإعدادات</h1>
+    <div class="card">
+      <h2>الأمن والخصوصية</h2>
+      <p><strong>تغيير كلمة المرور</strong></p>
+      <button>تغيير كلمة المرور</button>
+    </div>
+
+    <div class="card">
+      <h2>إدارة الحساب</h2>
+      <p><strong>الجهاز الحالي:</strong> هاتف Android</p>
+      <p><button onclick="logout()">تسجيل الخروج</button></p>
+    </div>
+
+    <div class="link-group">
+      <p><a href="#" onclick="goToScreen('home')">العودة إلى الرئيسية</a></p>
+    </div>
+  </section>
+
+  <script>
+    /**
+     * وظيفة للتبديل بين الشاشات المختلفة عبر إضافة وإزالة الكلاس "active"
+     * @param {string} screenId - معرّف العنصر (<section>) الذي نريد عرضه
+     */
+    function goToScreen(screenId) {
+      // إخفاء جميع الشاشات
+      const screens = document.querySelectorAll('.screen');
+      screens.forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      // عرض الشاشة المطلوبة
+      const target = document.getElementById(screenId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+
+    /**
+     * وظيفة لتسجيل الخروج (نموذجية)
+     * يمكن استبدالها بتنفيذ حقيقي لمسح بيانات الجلسة وتوجيه المستخدم إلى شاشة تسجيل الدخول
+     */
+    function logout() {
+      alert('تم تسجيل الخروج بنجاح.');
+      goToScreen('login');
+    }
+  </script>
+
+</body>
+</html>
